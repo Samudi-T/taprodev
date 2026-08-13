@@ -16,6 +16,7 @@ import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
 import { ErrorMessage } from '../components/auth/FormElements';
 import { useTheme } from '../context/ThemeContext';
 import AdminAiChatDrawer from '../components/admin/adminAiChatDrawer';
+import { getAllOrders } from '../services/orderService';
 
 const AdminDashboard = () => {
   const { theme } = useTheme();
@@ -24,6 +25,7 @@ const AdminDashboard = () => {
   const [error, setError] = useState(null);
   const [totalItems, setTotalItems] = useState(0);
   const [productStats, setProductStats] = useState({});
+  const [productSalesData, setProductSalesData] = useState([]);
   const [modalState, setModalState] = useState({
     showAdd: false,
     showEdit: false,
@@ -78,15 +80,53 @@ const AdminDashboard = () => {
     }
   }, []);
 
+  const fetchProductSales = useCallback(async () => {
+    try {
+      const ordersData = await getAllOrders({ page: 0, size: 200 });
+      const salesMap = new Map();
+
+      const orders = ordersData?.content || [];
+
+      orders.forEach((order) => {
+        const items = Array.isArray(order.items) ? order.items : [];
+
+        items.forEach((item) => {
+          const productName = item.productName || item.name || 'Unknown Product';
+          const quantity = Number(item.quantity || 0);
+          const revenue = Number(item.subtotal || item.total || item.priceAtPurchase || 0) * quantity;
+
+          if (!salesMap.has(productName)) {
+            salesMap.set(productName, { name: productName, quantity: 0, revenue: 0 });
+          }
+
+          const current = salesMap.get(productName);
+          current.quantity += quantity;
+          current.revenue += revenue;
+        });
+      });
+
+      const sortedSales = [...salesMap.values()]
+        .filter((item) => item.quantity > 0 || item.revenue > 0)
+        .sort((a, b) => b.quantity - a.quantity)
+        .slice(0, 8);
+
+      setProductSalesData(sortedSales);
+    } catch (err) {
+      console.error('Failed to load product sales data:', err.message);
+      setProductSalesData([]);
+    }
+  }, []);
+
   // Sync operations layout execution windows
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       fetchProducts();
       fetchProductStats();
+      fetchProductSales();
     }, 500);
     
     return () => clearTimeout(timeoutId);
-  }, [fetchProducts, fetchProductStats]);
+  }, [fetchProducts, fetchProductStats, fetchProductSales]);
 
   const handleSearchChange = (e) => {
     setFilters(prev => ({ ...prev, query: e.target.value, page: 1 }));
@@ -175,7 +215,7 @@ const AdminDashboard = () => {
       <AdminAiChatDrawer isOpen={isAiOpen} onClose={() => setIsAiOpen(false)} />
    
       {/* Render core metrics components wrapper passing analytical data */}
-      <DashboardStats productStats={productStats} />
+      <DashboardStats productStats={productStats} productSalesData={productSalesData} />
 
       <div className="mb-6" />
       
