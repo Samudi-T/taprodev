@@ -205,7 +205,7 @@ const ProductManagement = () => {
               name="minPrice"
               value={filters.minPrice}
               onChange={handleInputChange}
-              placeholder="Min $"
+              placeholder="Min Rs."
               min="0"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
             />
@@ -220,7 +220,7 @@ const ProductManagement = () => {
               name="maxPrice"
               value={filters.maxPrice}
               onChange={handleInputChange}
-              placeholder="Max $"
+              placeholder="Max Rs."
               min="0"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
             />
@@ -340,11 +340,11 @@ const ProductManagement = () => {
                       {product.sku}
                     </td>
                     <td className="px-4 py-4 text-sm text-gray-500">
-                      ${parseFloat(product.price).toFixed(2)}
+                      Rs.{parseFloat(product.price).toFixed(2)}
                     </td>
                     <td className="px-4 py-4">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                        ${product.stockQuantity > (product.lowStockThreshold || 10) ? 'bg-green-100 text-green-800' : 
+                        Rs.{product.stockQuantity > (product.lowStockThreshold || 10) ? 'bg-green-100 text-green-800' : 
                           product.stockQuantity > 0 ? 'bg-yellow-100 text-yellow-800' : 
                           'bg-red-100 text-red-800'}`}>
                         {product.stockQuantity} in stock

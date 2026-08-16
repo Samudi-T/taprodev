@@ -60,7 +60,7 @@ const ContactPage = () => {
           Get In Touch
         </Typography>
         <Typography variant="h6" color="text.secondary" maxWidth="md" mx="auto">
-          Have questions or want to discuss your project? We'd love to hear from you!
+          Have questions or want to discuss your product? We'd love to hear from you!
           Reach out to us using the information below or send us a message.
         </Typography>
       </Box>

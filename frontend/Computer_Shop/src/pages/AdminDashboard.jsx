@@ -249,7 +249,7 @@ const AdminDashboard = () => {
               {['Product', 'SKU', 'Price', 'Stock', 'Actions'].map((header, index) => (
                 <th 
                   key={header}
-                  className={`px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
+                  className={`px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider Rs.{
                     index === 0 ? 'w-2/5' : ''
                   }`}
                 >
@@ -300,11 +300,11 @@ const AdminDashboard = () => {
                     {product.sku}
                   </td>
                   <td className="px-4 py-4 text-sm text-gray-500">
-                    ${product.price.toFixed(2)}
+                    Rs.{product.price.toFixed(2)}
                   </td>
                   <td className="px-4 py-4">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                      ${product.stock > 20 ? 'bg-green-100 text-green-800' : 
+                      Rs.{product.stock > 20 ? 'bg-green-100 text-green-800' : 
                         product.stock > 0 ? 'bg-yellow-100 text-yellow-800' : 
                         'bg-red-100 text-red-800'}`}>
                       {product.stock} in stock
