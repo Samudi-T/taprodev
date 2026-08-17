@@ -48,7 +48,7 @@ public class UserManagementDto {
     public record UserStatsResponse(
             long totalUsers,
             long activeUsers,
-            long customersCount,
+            long customerCount,
             long techniciansCount,
             long adminsCount
     ) {}

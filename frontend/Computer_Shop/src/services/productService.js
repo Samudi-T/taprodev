@@ -502,7 +502,7 @@ export const getDashboardStats = async () => {
     return {
       activeCount,
       totalSales,
-      customerCount,
+      customerCount: Number(customerCount || 0),
       revenue,
     };
   } catch (error) {

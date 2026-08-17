@@ -92,9 +92,14 @@ export const getCustomerCount = async () => {
   try {
     // Queries your UserManagementController.getUserStats() mapping
     const response = await api.get('/admin/users/stats');
-    
-    // Maps dynamically to the returned UserStatsResponse data object properties
-    return response.data?.customerCount ?? response.data?.totalCustomers ?? 0;
+    const stats = response.data || {};
+
+    // Support both naming conventions to keep the dashboard stable during backend migrations.
+    const customerCount = Number(
+      stats.customerCount ?? stats.customersCount ?? stats.totalCustomers ?? 0
+    );
+
+    return Number.isFinite(customerCount) ? customerCount : 0;
   } catch (error) {
     console.warn("Stats aggregator failed, processing list fallback scan array...", error.message);
     

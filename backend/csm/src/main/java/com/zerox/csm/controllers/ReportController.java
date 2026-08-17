@@ -16,6 +16,7 @@ import com.zerox.csm.dto.OrderDto.OrderItemResponse;
 import com.zerox.csm.model.OrderItem;
 import com.zerox.csm.repository.UserRepository;
 import com.zerox.csm.dto.UserDto.AdminUserResponse;
+import com.zerox.csm.model.UserRole;
 import java.util.stream.Collectors;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -85,6 +86,7 @@ public class ReportController {
     @GetMapping("/customers")
     public ResponseEntity<List<AdminUserResponse>> getAllCustomersReport() {
         List<AdminUserResponse> customers = userRepository.findAll().stream()
+            .filter(user -> user.getRole() == UserRole.CUSTOMER)
             .map(user -> new AdminUserResponse(
                 user.getUserId(),
                 user.getEmail(),
