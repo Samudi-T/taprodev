@@ -138,7 +138,7 @@ cd backend/csm
 mvn spring-boot:run
 
 # Frontend (in a separate terminal)
-cd frontend/Computer_Shop
+cd frontend\Computer_Shop
 npm install
 npm run dev
 ```
