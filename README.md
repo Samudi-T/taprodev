@@ -2,7 +2,7 @@
 
 # Taprodev
 
-**A full-stack computer hardware e-commerce and repair management platform**
+**Web -Based Computer Hardware E-Cmmerce Management System**
 
 Built with Spring Boot, React, and MySQL — combining a customer storefront with an operational back office for a computer hardware retailer.
 
