@@ -1,245 +1,186 @@
-# 💻 Web-Based Computer Hardware E-Commerce Management System
+<div align="center">
+
+# Taprodev
 
-A modern **Web-Based Computer Hardware E-Commerce Management System** developed to provide an efficient platform for customers to browse, search, and purchase computer hardware products online.
+**A full-stack computer hardware e-commerce and repair management platform**
 
-The system also includes a comprehensive **Admin Management Panel** that allows administrators to manage products, categories, orders, discounts, coupons, customers, repairs, users, reports, and system settings.
+Built with Spring Boot, React, and MySQL — combining a customer storefront with an operational back office for a computer hardware retailer.
 
+</div>
+
+---
 
+## Table of Contents
 
-## 📌 Project Overview
+- [Overview](#overview)
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Known Limitations](#known-limitations)
+- [License](#license)
 
-The Computer Hardware E-Commerce Management System is designed for computer hardware businesses to manage their online sales and business operations through a centralized web application.
+## Overview
 
-Customers can browse available computer hardware, view product information, place orders, and manage their accounts.
+Small and medium computer hardware retailers typically manage sales, stock, and repair services through disconnected tools — spreadsheets, basic point-of-sale terminals, and paper or messaging-app-based repair logs. Taprodev unifies these into a single system: a specification-rich product catalogue and transactional storefront for customers, and a role-separated operational back office for staff, sharing one data model and one authentication layer.
 
-Administrators can manage the entire e-commerce operation through the administrative dashboard.
+Access is controlled by JWT-based authentication across three roles — **Customer**, **Admin**, and **Technician** — each scoped to the functionality relevant to them.
 
+## Screenshots
 
-## 🎯 Objectives
+### Customer storefront
 
-The main objectives of this system are:
+<table>
+<tr>
+<td width="50%"><img src="screenshots/storefront-home.jpeg" alt="Storefront home page"/><br/><sub>Home page</sub></td>
+<td width="50%"><img src="screenshots/product-detail.jpeg" alt="Product detail page"/><br/><sub>Product detail with specifications and reviews</sub></td>
+</tr>
+<tr>
+<td width="50%"><img src="screenshots/cart-checkout.jpeg" alt="Cart and checkout"/><br/><sub>Cart and order summary</sub></td>
+<td width="50%"><img src="screenshots/my-orders.jpeg" alt="Order history"/><br/><sub>Order history and status tracking</sub></td>
+</tr>
+</table>
 
-- 🛒 Provide an online platform for purchasing computer hardware.
-- 💻 Display computer hardware products with relevant information.
-- 🔍 Allow customers to search and browse products easily.
-- 📦 Manage customer orders efficiently.
-- 👤 Manage customer and user accounts.
-- 🏷️ Manage product categories and discounts.
-- 🎟️ Manage promotional coupons.
-- 🔧 Manage computer repair services.
-- 📊 Provide business reports and statistics.
-- ⚙️ Provide centralized system administration.
-- 📈 Provide an informative dashboard for administrators.
+### Admin & operations panel
 
+<table>
+<tr>
+<td width="50%"><img src="screenshots/admin-dashboard.jpeg" alt="Admin dashboard"/><br/><sub>Dashboard — customers, orders, revenue, sales</sub></td>
+<td width="50%"><img src="screenshots/product-management.jpeg" alt="Product management"/><br/><sub>Product management</sub></td>
+</tr>
+<tr>
+<td width="50%"><img src="screenshots/order-management.jpeg" alt="Order management"/><br/><sub>Order management</sub></td>
+<td width="50%"><img src="screenshots/repair-management.jpeg" alt="Repair management"/><br/><sub>Repair job tracking</sub></td>
+</tr>
+<tr>
+<td colspan="2"><img src="screenshots/reports-hub.jpeg" alt="Reporting hub"/><br/><sub>Reporting hub — inventory, orders, customers, repairs</sub></td>
+</tr>
+</table>
 
+## Features
 
-## ✨ Main Features
+### Customer
 
-### 👨‍💻 Customer Features
+- Registration and login (JWT-based)
+- Product browsing, search, and category filtering
+- Product detail pages with specifications, stock, and images
+- Shopping cart and wishlist
+- Coupon application at checkout
+- Secure checkout via Stripe
+- Order placement, tracking, and returns
+- Product reviews
+- Reward points and loyalty tier
+- Repair request submission and status tracking
 
-- User registration
-- User login
-- User profile management
-- Browse computer hardware products
-- Product search
-- Product categories
-- Product details
-- Shopping cart
-- Order placement
-- Order management
-- Discount and coupon usage
-- Repair service requests
-- Contact page
-- Service information
-- Responsive user interface
+### Admin
 
+- Dashboard: customers, orders, products, revenue, order status distribution
+- Product, category, and stock management
+- Discount and coupon management
+- Order and returns management
+- User management
+- Repair job oversight
+- Reporting, including an AI-assisted natural-language query feature for ad-hoc business questions
+- System settings
 
+### Technician
 
-### 🛠️ Admin Features
+- Scoped access to assigned repair requests
+- Diagnostic notes and repair status updates, visible to the customer
 
-The system provides a dedicated Admin Panel.
+## Tech Stack
 
-#### 📊 Dashboard
+| Layer | Technology |
+|---|---|
+| Backend | Spring Boot 3.4.2, Spring Security (JWT), Spring Data JPA, MapStruct, Lombok |
+| Frontend | React 18, Vite |
+| Database | MySQL |
+| Payments | Stripe (test/sandbox mode for development) |
+| Email | SMTP (order and authentication notifications) |
 
-The dashboard provides an overview of the system, including:
+## Getting Started
 
-- Total customers
-- Total orders
-- Total products
-- Total revenue
-- Delivered orders
-- Cancelled orders
-- Order status distribution
-- Business statistics
+### Prerequisites
 
-#### 📦 Product Management
+- JDK 17
+- Maven (or the bundled Maven Wrapper)
+- Node.js 18+ and npm
+- A running MySQL instance
 
-Administrators can:
+### 1. Create the database
 
-- Add products
-- Edit products
-- Delete products
-- Update product information
-- Manage product prices
-- Manage product stock
-- Manage product images
+```sql
+CREATE DATABASE computer_shop;
+```
 
-#### 🏷️ Category Management
+### 2. Configure the backend
 
-Administrators can:
+Copy `backend/csm/.env.example` to `.env` (or set equivalent environment variables) and fill in:
 
-- Add categories
-- Edit categories
-- Delete categories
-- Organize products according to categories
+- `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`
+- `JWT_SECRET_KEY`, `JWT_EXPIRATION`
+- `SERVER_PORT` (default `8080`)
+- `STRIPE_SECRET_KEY` (use a Stripe **test-mode** key)
+- `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`
 
-#### 💰 Discount Management
+The schema is created automatically on first run — no manual migration step is needed.
 
-- Create discounts
-- Update discounts
-- Delete discounts
-- Manage discount rates
-- Apply discounts to products
+### 3. Configure the frontend
 
-#### 🎟️ Coupon Management
+Copy `frontend/Computer_Shop/.env.example` to `.env` and set `VITE_API_BASE_URL` to your backend address (e.g. `http://localhost:8080`).
 
-- Create coupons
-- Manage coupon codes
-- Set coupon discounts
-- Update coupon information
-- Delete coupons
+### 4. Run the app
 
-#### 🛒 Order Management
+```bash
+# Backend
+cd backend/csm
+mvn spring-boot:run
 
-Administrators can:
-
-- View customer orders
-- View order details
-- Update order status
-- Manage delivered orders
-- Manage cancelled orders
-- Track order information
-
-#### 🔧 Repair Management
-
-The system supports computer repair service management.
-
-Administrators can:
-
-- View repair requests
-- Manage repair requests
-- Update repair status
-- Track repair services
-
-#### 👥 User Management
-
-Administrators can:
-
-- View registered users
-- Manage user accounts
-- Update user information
-- Manage user access
-
-#### 📈 Reports
-
-The reporting section can be used to monitor:
-
-- Sales
-- Orders
-- Revenue
-- Products
-- Customers
-- Business performance
-
-#### ⚙️ System Settings
-
-Administrators can manage system-level configurations.
-
-
-
-## 🖥️ System Screenshots
-
-### 🏠 Customer Home Page
-
-The home page provides access to products, services, contact information, search, categories, and other customer functions.
-
-
-
-### 🛒 E-Commerce Home Interface
-
-The website provides a modern computer hardware shopping interface with product navigation and promotional sections.
-
-
-
-### 📊 Admin Dashboard
-
-The Admin Dashboard provides an overview of customers, orders, products, revenue, and order statistics.
-
-
-
-## 🧩 Main System Modules
-
-The system consists of the following major modules:
-
-Web-Based Computer Hardware
-E-Commerce Management System
-│
-├── Customer Management
-│
-├── Product Management
-│
-├── Category Management
-│
-├── Shopping Cart
-│
-├── Order Management
-│
-├── Discount Management
-│
-├── Coupon Management
-│
-├── Repair Management
-│
-├── User Management
-│
-├── Reports
-│
-└── System Settings
-
-##🛠️ Technologies Used
-
-Frontend
-HTML5
-CSS3
-JavaScript
-React.js
-Vite
-Bootstrap 
-
-Backend
-Node.js
-Express.js
-
-Database
- MySQL
- 
-Development Tools
-
-Visual Studio Code
-Git
-GitHub
-
-🚀 Installation and Setup
-1. Clone the Repository
-2. 
-3. Navigate to the Project
-   
-cd computer-hardware-ecommerce
-5. Install Dependencies
+# Frontend (in a separate terminal)
+cd frontend/Computer_Shop
 npm install
-6. Start the Development Server
 npm run dev
-The application will normally be available at:
-http://localhost:5173
+```
 
+- Backend API: `http://localhost:8080`
+- Frontend: `http://localhost:5173`
 
+### 5. Get admin/technician access
+
+All new registrations default to the **Customer** role. To demonstrate the Admin or Technician views, register a normal account through the app, then promote it directly in the database:
+
+```sql
+UPDATE users SET role = 'ADMIN' WHERE email = 'your-account@example.com';
+-- or
+UPDATE users SET role = 'TECHNICIAN' WHERE email = 'your-account@example.com';
+```
+
+Log out and back in after promotion so a new token is issued with the updated role.
+
+### 6. Test payments
+
+Checkout uses Stripe's test mode. Use one of [Stripe's published test card numbers](https://docs.stripe.com/testing) (e.g. `4242 4242 4242 4242`, any future expiry, any CVC) — never real card details.
+
+## Project Structure
+
+```
+taprodev/
+├── backend/csm/              # Spring Boot API
+├── frontend/Computer_Shop/   # React + Vite storefront and admin portal
+└── screenshots/              # README screenshots
+```
+
+## Known Limitations
+
+This project documents its own limitations rather than hiding them:
+
+- **AI query endpoint** is protected by a keyword blocklist rather than a parameterised, schema-restricted query interface.
+- **Schema management** currently relies on Hibernate `ddl-auto=update` rather than version-controlled Flyway migrations, despite Flyway being configured as a dependency.
+- **No automated test suite** — validation has been done through structured manual testing only.
+
+Full detail on each of these, and the corresponding future-work plan, is in the project report.
+
+## License
+
+Academic project — for coursework/demonstration purposes.
